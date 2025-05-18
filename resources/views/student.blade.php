@@ -41,21 +41,51 @@
 
   <!-- Login Form Card -->
   <div class="relative z-10 flex items-center justify-center h-[calc(100vh-80px)]">
-    <form id="studentForm" class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-lg shadow-lg text-center max-w-sm w-full space-y-6 slide-in">
+    <form
+      id="studentForm"
+      method="POST"
+      action="{{ route('student.login.post') }}"
+      class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-lg shadow-lg text-center max-w-sm w-full space-y-6 slide-in"
+    >
+      @csrf
+
       <h2 class="text-xl font-semibold">Login to TrailBlazer</h2>
 
+      @if($errors->any())
+        <div class="text-red-600 text-sm mb-2 text-left">
+          @foreach($errors->all() as $error)
+            <p>{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
       <div class="flex flex-col text-left">
-        <label for="studentEmail" class="text-sm mb-1 font-medium">Username</label>
-        <input id="studentEmail" type="text" placeholder="Enter your username" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off">
+        <label for="studentEmail" class="text-sm mb-1 font-medium">Email</label>
+        <input
+          id="studentEmail"
+          name="studentEmail"
+          type="text"
+          placeholder="Enter your email"
+          class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          autocomplete="off"
+        >
       </div>
 
       <div class="flex flex-col text-left">
         <label for="studentPassword" class="text-sm mb-1 font-medium">Password</label>
-        <input id="studentPassword" type="password" placeholder="Enter your password" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <input
+          id="studentPassword"
+          name="studentPassword"
+          type="password"
+          placeholder="Enter your password"
+          class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
       </div>
 
       <div class="flex flex-col gap-3">
-        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition">Login</button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition">
+          Login
+        </button>
         <button type="button" onclick="window.location.href='studentsign'" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 rounded transition">
           Sign Up
         </button>
@@ -63,7 +93,7 @@
     </form>
   </div>
 
-  <!-- Back to Home Button (✅ inside body, with z-20) -->
+  <!-- Back to Home Button -->
   <div class="absolute bottom-4 left-4 z-20">
     <button onclick="window.location.href='/'" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition">
       Back to Home

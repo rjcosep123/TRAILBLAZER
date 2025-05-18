@@ -41,21 +41,51 @@
 
   <!-- Login Form Card -->
   <div class="relative z-10 flex items-center justify-center h-[calc(100vh-80px)]">
-    <form id="facultyForm" class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-lg shadow-lg text-center max-w-sm w-full space-y-6 slide-in">
+    <form
+      id="facultyForm"
+      method="POST"
+      action="{{ route('faculty.login.post') }}"
+      class="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-lg shadow-lg text-center max-w-sm w-full space-y-6 slide-in"
+    >
+      @csrf
+
       <h2 class="text-xl font-semibold">Faculty Login</h2>
 
+      @if($errors->any())
+        <div class="text-red-600 text-sm mb-2 text-left">
+          @foreach($errors->all() as $error)
+            <p>{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
       <div class="flex flex-col text-left">
-        <label for="facultyUsername" class="text-sm mb-1 font-medium">Username</label>
-        <input id="facultyUsername" type="text" placeholder="Enter your username" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off">
+        <label for="facultyEmail" class="text-sm mb-1 font-medium">Email</label>
+        <input
+          id="facultyEmail"
+          name="facultyEmail"
+          type="text"
+          placeholder="Enter your email"
+          class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          autocomplete="off"
+        >
       </div>
 
       <div class="flex flex-col text-left">
         <label for="facultyPassword" class="text-sm mb-1 font-medium">Password</label>
-        <input id="facultyPassword" type="password" placeholder="Enter your password" class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <input
+          id="facultyPassword"
+          name="facultyPassword"
+          type="password"
+          placeholder="Enter your password"
+          class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
       </div>
 
       <div class="flex flex-col gap-3">
-        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition">Login</button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition">
+          Login
+        </button>
         <button type="button" onclick="window.location.href='facultysign'" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 rounded transition">
           Sign Up
         </button>

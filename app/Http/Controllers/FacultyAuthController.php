@@ -24,4 +24,26 @@ class FacultyAuthController extends Controller
 
         return redirect()->route('faculty.login')->with('success', 'Account created successfully. You can now log in.');
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'facultyEmail' => 'required|email',
+            'facultyPassword' => 'required|string',
+        ]);
+
+        $faculty = Faculty::where('email', $request->facultyEmail)->first();
+
+        if (!$faculty || !Hash::check($request->facultyPassword, $faculty->password)) {
+            return back()->withErrors(['loginError' => 'Invalid email or password.'])->withInput();
+        }
+
+        // ✅ Clear student session if exists
+        session()->forget('student_id');
+
+        // ✅ Store faculty ID in session
+        session(['faculty_id' => $faculty->id]);
+
+        return redirect()->route('afterlog');
+    }
 }
